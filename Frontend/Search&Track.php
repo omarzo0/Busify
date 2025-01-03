@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $destination = $_POST['destination'];
 
         // Query the database
-        $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%'";
+        $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%' AND available_seats > 0";
         $result = mysqli_query($conn, $sql);
 
         // Check if results exist
