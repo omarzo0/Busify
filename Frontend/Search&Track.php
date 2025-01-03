@@ -82,13 +82,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Query the database
         $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%' AND available_seats > 0";
-        $result = mysqli_query($conn, $sql);
-
+        $result = mysqli_query($conn, $sql);?>
+        <div class="head__box">
+        <p>Available Buses</p>
+        <?php
         // Check if results exist
         if (mysqli_num_rows($result) > 0) { ?>
             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                <div class="head__box">
-                    <p>Available Buses</p>
+                
                     <div class="search__box">
                         <div>
                             <label>Bus Number</label>
@@ -125,9 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </form>
                         </div>
                     </div>
-                </div>
-            <?php } 
-        } else {
+            <?php } ?>
+            </div>
+       <?php } else {
             echo '<p>No buses found for the selected route.</p>';
         }
     }
