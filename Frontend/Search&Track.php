@@ -54,7 +54,7 @@ else{
             </div>
             <div>
                 <label>To</label>
-                <input type="text" name="destination" placeholder="To" required>
+                <input type="text" name="destination" placeholder="To">
             </div>
             <div>
                 <button type="submit" class="search__button">Search</button>
