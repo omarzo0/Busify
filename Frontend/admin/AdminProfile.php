@@ -1,44 +1,82 @@
 <?php
-// Database connection
+// Include database connection
 require_once '../../Backend/ConnectDB.php';
 
-// Fetch important values from the database
-$queryBuses = "SELECT COUNT(*) AS total_buses FROM buses";
-$queryDrivers = "SELECT COUNT(*) AS total_drivers FROM drivers";
-$queryPassengers = "SELECT COUNT(*) AS total_passengers FROM passenger_signup";
-$queryTrips = "SELECT COUNT(*) AS total_trips FROM trips";
 
-$resultBuses = mysqli_query($conn, $queryBuses);
-$resultDrivers = mysqli_query($conn, $queryDrivers);
-$resultPassengers = mysqli_query($conn, $queryPassengers);
-$resultTrips = mysqli_query($conn, $queryTrips);
 
-$rowBuses = mysqli_fetch_assoc($resultBuses);
-$rowDrivers = mysqli_fetch_assoc($resultDrivers);
-$rowPassengers = mysqli_fetch_assoc($resultPassengers);
-$rowTrips = mysqli_fetch_assoc($resultTrips);
+// Ensure admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    echo "<script>
+            alert('Please log in first!');
+            window.location.href='AdminSignIn.php';
+          </script>";
+    exit;
+}
 
-$totalBuses = $rowBuses['total_buses'];
-$totalDrivers = $rowDrivers['total_drivers'];
-$totalPassengers = $rowPassengers['total_passengers'];
-$totalTrips = $rowTrips['total_trips'];
+// Fetch admin data
+$admin_id = $_SESSION['admin_id'];
+$query = "SELECT * FROM admin_signup WHERE id = '$admin_id'";
+$result = mysqli_query($conn, $query);
+$admin = mysqli_fetch_assoc($result);
+
+if (!$admin) {
+    echo "<script>
+            alert('Admin not found!');
+            window.location.href='AdminSignIn.php';
+          </script>";
+    exit;
+}
+
+// Handle form submission for updating the profile
+if (isset($_POST['update'])) {
+    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+
+    // Check for duplicate email
+    $check_email_query = "SELECT id FROM admin_signup WHERE email = '$email' AND id != '$admin_id'";
+    $email_result = mysqli_query($conn, $check_email_query);
+
+    if (mysqli_num_rows($email_result) > 0) {
+        echo "<script>
+                alert('Email already exists. Please use another email.');
+              </script>";
+    } else {
+        // Update query
+        $update_query = "UPDATE admin_signup 
+                         SET fname = '$fname', lname = '$lname', phone = '$phone', email = '$email'
+                         WHERE id = '$admin_id'";
+        $update_result = mysqli_query($conn, $update_query);
+
+        if ($update_result) {
+            echo "<script>
+                    alert('Profile updated successfully!');
+                    window.location.href='AdminDashboard.php';
+                  </script>";
+        } else {
+            echo "<script>
+                    alert('Error updating profile: " . mysqli_error($conn) . "');
+                  </script>";
+        }
+    }
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Profile</title>
     <link type="text/css" rel="stylesheet" href="../template.css">
-    <link type="text/css" rel="stylesheet" href="../SignUpSignIn.css">
-    <link type="text/css" rel="stylesheet" href="css/adminDashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <link type="text/css" rel="stylesheet" href="css/global.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 
 </head>
 <body class="flex">
-
-<!-- Component Start -->
 <div class="flex flex-col items-center w-60 h-screen bg-gray-900 text-gray-400 rounded">
 <a class="flex items-center w-full px-3 mt-3" href="#">
         <img class="logo" src="../Supportive Files/logo.png" alt="Logo">
@@ -94,105 +132,34 @@ $totalTrips = $rowTrips['total_trips'];
 			</div>
 		</div>
 	</div>
-	<!-- Component End  -->
 
-<!-- Admin Dashboard -->
-<div class="dashboard-container">
-    <h1>Admin Dashboard</h1>
-    
-    <!-- Pie Charts Section -->
-    <div class="chart-container">
-        <canvas id="busesChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="driversChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="passengersChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="tripsChart"></canvas>
-    </div>
+<div class="profile__page">
+    <form action="" method="POST">
+    <h1>Admin Profile</h1>
+
+        <div class="input__fields">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" value="<?php echo htmlspecialchars($admin['fname']); ?>">
+        </div>
+
+        <div class="input__fields">
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" value="<?php echo htmlspecialchars($admin['lname']); ?>" >
+        </div>
+
+        <div class="input__fields">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($admin['phone']); ?>" >
+        </div>
+
+        <div class="input__fields">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($admin['email']); ?>" >
+        </div>
+
+        <button class="submit__button" type="submit" name="update">Update Profile</button>
+    </form>
 </div>
 
-
-<script>
-    // Data for the charts (from PHP)
-    var busesData = <?php echo $totalBuses; ?>;
-    var driversData = <?php echo $totalDrivers; ?>;
-    var passengersData = <?php echo $totalPassengers; ?>;
-    var tripsData = <?php echo $totalTrips; ?>;
-
-    // Buses Chart (Pie chart)
-    var ctxBuses = document.getElementById('busesChart').getContext('2d');
-    new Chart(ctxBuses, {
-        type: 'pie',
-        data: {
-            labels: ['Buses'],
-            datasets: [{
-                label: 'Total Buses',
-                data: [busesData],
-                backgroundColor: ['rgba(54, 162, 235, 0.6)'],
-                borderColor: ['rgba(54, 162, 235, 1)'],
-                borderWidth: 1
-            }]
-        }
-    });
-
-    // Drivers Chart (Pie chart)
-    var ctxDrivers = document.getElementById('driversChart').getContext('2d');
-    new Chart(ctxDrivers, {
-        type: 'pie',
-        data: {
-            labels: ['Drivers'],
-            datasets: [{
-                label: 'Total Drivers',
-                data: [driversData],
-                backgroundColor: ['rgba(255, 99, 132, 0.6)'],
-                borderColor: ['rgba(255, 99, 132, 1)'],
-                borderWidth: 1
-            }]
-        }
-    });
-
-    // Passengers Chart (Pie chart)
-    var ctxPassengers = document.getElementById('passengersChart').getContext('2d');
-    new Chart(ctxPassengers, {
-        type: 'pie',
-        data: {
-            labels: ['Passengers'],
-            datasets: [{
-                label: 'Total Passengers',
-                data: [passengersData],
-                backgroundColor: ['rgba(75, 192, 192, 0.6)'],
-                borderColor: ['rgba(75, 192, 192, 1)'],
-                borderWidth: 1
-            }]
-        }
-    });
-
-    // Trips Chart (Pie chart)
-    var ctxTrips = document.getElementById('tripsChart').getContext('2d');
-    new Chart(ctxTrips, {
-        type: 'pie',
-        data: {
-            labels: ['Trips'],
-            datasets: [{
-                label: 'Total Trips',
-                data: [tripsData],
-                backgroundColor: ['rgba(153, 102, 255, 0.6)'],
-                borderColor: ['rgba(153, 102, 255, 1)'],
-                borderWidth: 1
-            }]
-        }
-    });
-    function logout() {
-        sessionStorage.clear();  
-        localStorage.clear();  
-
-    }
-</script>
-
 </body>
-
 </html>

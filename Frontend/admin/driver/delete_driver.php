@@ -1,5 +1,5 @@
 <?php
-require_once '../../Backend/ConnectDB.php';
+require_once '../../../Backend/ConnectDB.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
         echo "
         <script>
             alert('Driver deleted successfully.');
-            window.location.href='drivers.php'; 
+            window.location.href='../driver/drivers.php'; 
         </script>
         ";
     } else {

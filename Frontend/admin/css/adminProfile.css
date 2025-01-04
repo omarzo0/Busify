@@ -1,0 +1,73 @@
+.logo {
+  height: 50px;
+}
+
+.header__quick__links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 16px;
+}
+
+.admin__profile__page {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.admin__profile__page h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: rgb(76, 76, 197);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input__fields {
+  margin-bottom: 20px;
+}
+
+.input__fields label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: rgb(76, 76, 197);
+}
+
+.input__fields input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.input__fields input:focus {
+  outline: none;
+  border-color: rgb(76, 76, 197);
+  box-shadow: 0 0 4px rgba(75, 16, 141, 0.2);
+}
+
+.submit__button {
+  padding: 12px 20px;
+  background-color: rgb(76, 76, 197);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.submit__button:hover {
+  background-color: #3a0e6e;
+}

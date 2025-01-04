@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
         echo "
         <script>
             alert('Trip deleted successfully.');
-            window.location.href='trips/trips.php'; 
+            window.location.href='../trips/trips.php'; 
         </script>
         ";
     } else {

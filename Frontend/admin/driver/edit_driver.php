@@ -1,5 +1,5 @@
 <?php
-require_once '../../Backend/ConnectDB.php';
+require_once '../../../Backend/ConnectDB.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
         echo "
         <script>
             alert('Driver details updated successfully.');
-            window.location.href='view_drivers.php'; // Redirect after update
+            window.location.href='../driver/view_drivers.php'; 
         </script>
         ";
     } else {
@@ -43,23 +43,27 @@ if (isset($_POST['update'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Driver</title>
-    <link rel="stylesheet" href="../template.css">
-    <link rel="stylesheet" href="../SignUpSignIn.css">
-    <link type="text/css" rel="stylesheet" href="css/adminDashboard.css">
+    <link rel="stylesheet" href="../../template.css">
+    <link rel="stylesheet" href="../../SignUpSignIn.css">
+    <link type="text/css" rel="stylesheet" href="../css/adminDashboard.css">
 
 </head>
 <body>
     <header>
     <nav class="navigation">
-        <img class="logo" src="../Supportive Files/logo.png" alt="Logo">
+        <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
         <div class="header__quick__links">
-            <a class="navigation__a" href="Drivers.php">driver list</a>
-            <a class="navigation__a" href="trips/Trips.php">trips list</a>
-            <a href="AdminSignIn.php">
+        <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
+        <a class="navigation__a" href="../AdminProfile.php">My profile</a>
+            <a class="navigation__a" href="../driver/Drivers.php">driver list</a>
+            <a class="navigation__a" href="../trips/Trips.php">trips list</a>
+            <a class="navigation__a" href="../passengers/passengers.php">passengers list</a>
+            <a class="navigation__a" href="../vehicles/vehicles.php">vehicle list</a>
+            <a href="../AdminSignIn.php">
     <button class="btnsignin-popup" onclick="logout()">Logout</button>
 </a>
         </div>
-    </nav>
+        </nav>
     </header>
 
     <div class="driver__signup__page">

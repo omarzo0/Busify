@@ -47,13 +47,17 @@ if (isset($_POST['submit'])) {
     <nav class="navigation">
         <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
         <div class="header__quick__links">
-            <a class="navigation__a" href="Drivers.php">driver list</a>
-            <a class="navigation__a" href="trips/Trips.php">trips list</a>
+        <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
+        <a class="navigation__a" href="../AdminProfile.php">My profile</a>
+            <a class="navigation__a" href="../driver/Drivers.php">driver list</a>
+            <a class="navigation__a" href="../trips/Trips.php">trips list</a>
+            <a class="navigation__a" href="../passengers/passengers.php">passengers list</a>
+            <a class="navigation__a" href="../vehicles/vehicles.php">vehicle list</a>
             <a href="../AdminSignIn.php">
     <button class="btnsignin-popup" onclick="logout()">Logout</button>
 </a>
         </div>
-    </nav>
+        </nav>
     </header>
 
     <div class="trip__form__page">
@@ -86,6 +90,7 @@ if (isset($_POST['submit'])) {
                         <option value="<?php echo $driver['id']; ?>"><?php echo $driver['busno']; ?></option>
                     <?php } ?>
                 </select>
+                
             </div>
            
             <button class="submit__button"  type="submit" name="submit">Add Trip</button>

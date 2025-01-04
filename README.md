@@ -29,6 +29,12 @@ Busify is a Public Transport Service Tracking and Tickets Booking Application de
 - [x] Passenger Ticket Booking
 - [x] Passenger Ticket Cancellation
 - [x] Passenger Ticket History
+- [x] Admin Login
+- [x] Admin Dashboard
+- [x] Admin Profile
+- [x] Admin Driver Details
+- [x] Admin Passenger Details
+- [x] Admin Bus Details
 <details>
 <summary>Click to View More</summary>
 <ul>
@@ -47,14 +53,8 @@ Busify is a Public Transport Service Tracking and Tickets Booking Application de
 <li>Driver Bus History</li>
 <li>Driver Feedback</li>
 <li>Driver Help</li>
-<li>Admin Login</li>
-<li>Admin Dashboard</li>
-<li>Admin Profile</li>
-<li>Admin Passenger Details</li>
-<li>Admin Driver Details</li>
-<li>Admin Bus Details</li>
-<li>Admin Feedback Details</li>
-<li>Admin Help</li>
+<li>Admin Feedback</li>
+<li>Admin ticket</li>
 </ul>
 </details>
 

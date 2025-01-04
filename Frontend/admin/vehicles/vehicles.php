@@ -1,11 +1,8 @@
 <?php
 require_once '../../../Backend/ConnectDB.php';
 
-// Correct SQL query without the extra comma
-$query = "SELECT * FROM trips";
+$query = "SELECT * FROM buses";
 $result = mysqli_query($conn, $query);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -13,11 +10,9 @@ $result = mysqli_query($conn, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trips list</title>
+    <title>vehicle List</title>
     <link type="text/css" rel="stylesheet" href="../../template.css">
-    <link type="text/css" rel="stylesheet" href="../../SignUpSignIn.css">
     <link type="text/css" rel="stylesheet" href="../css/adminDashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 </head>
 <body>
 <header>
@@ -37,39 +32,38 @@ $result = mysqli_query($conn, $query);
         </nav>
 </header>
 
-<!-- Admin Dashboard -->
 <div class="dashboard-container">
-    <h1>Trips List</h1>
-    <a class="" href="Add_Trip.php">Add Trip</a>
-    <table >
-    <tr>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Source</th>
-        <th>Destination</th>
-        <th>Price</th>
-        <th>Actions</th>
-    </tr>
-    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-    <tr>
-        <td><?php echo $row['date']; ?></td>
-        <td><?php echo $row['time']; ?></td>
-        <td><?php echo $row['source']; ?></td>
-        <td><?php echo $row['destination']; ?></td>
-        <td><?php echo $row['price']; ?></td>
-        <td>
-            <a href="trips/edit_trip.php?id=<?php echo $row['id']; ?>">Edit</a> | 
-            <a href="trips/delete_trip.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this trip?');">Delete</a>
-        </td>
-    </tr>
-    <?php } ?>
-</table> 
+    <h1>vehicle List</h1>
+    <a  href="../vehicles/add_vehicle.php">Add vehicle</a>
+
+    <table>
+        <tr>
+            <th>vehicle Number</th>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Available Seats</th>
+            <th>Actions</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+        <tr>
+            <td><?php echo $row['bus_number']; ?></td>
+            <td><?php echo $row['source']; ?></td>
+            <td><?php echo $row['destination']; ?></td>
+            <td><?php echo $row['time']; ?></td>
+            <td><?php echo $row['date']; ?></td>
+            <td><?php echo $row['price']; ?></td>
+            <td><?php echo $row['available_seats']; ?></td>
+            <td>
+                <a href="edit_vehicle.php?id=<?php echo $row['id']; ?>">Edit</a>
+                <a href="delete_vehicle.php?id=<?php echo $row['id']; ?>">Delete</a>
+            </td>
+        </tr>
+        <?php } ?>
+    </table>
 </div>
-<script>
-    function logout() {
-        sessionStorage.clear();  
-        localStorage.clear();  
-    }
-</script>
+
 </body>
 </html>
