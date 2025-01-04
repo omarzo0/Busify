@@ -54,7 +54,7 @@ else{
             </div>
             <div>
                 <label>To</label>
-                <input type="text" name="destination" placeholder="To" required>
+                <input type="text" name="destination" placeholder="To">
             </div>
             <div>
                 <button type="submit" class="search__button">Search</button>
@@ -64,52 +64,77 @@ else{
 </form>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Fetch user input
-    $source = $_POST['source'];
-    $destination = $_POST['destination'];
+    if (isset($_POST['book'])) {
+        // Fetch the bus ID from the booking form
+        $bus_id = $_POST['bus_id'];
 
-    // Query the database
-    $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%'";
-    $result = mysqli_query($conn, $sql);
-
-    // Check if results exist
-    if (mysqli_num_rows($result) > 0) { ?>
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <div class="head__box">
-                <p>Available Buses</p>
-                <div class="search__box">
-                    <div>
-                        <label>From</label>
-                        <input type="text" value="<?php echo $row['source']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>To</label>
-                        <input type="text" value="<?php echo $row['destination']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <input type="text" value="<?php echo $row['time']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Date</label>
-                        <input type="text" value="<?php echo $row['date']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Price</label>
-                        <input type="text" value="<?php echo $row['price']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Available Seats</label>
-                        <input type="text" value="<?php echo $row['available_seats']; ?>" readonly>
-                    </div>
-                </div>
-            </div>
-        <?php } 
+        // Update the available_seats column in the database
+        $update_sql = "UPDATE buses SET available_seats = available_seats - 1 WHERE id = $bus_id AND available_seats > 0";
+        if (mysqli_query($conn, $update_sql)) {
+            echo "<p>Booking successful! Seat reserved.</p>";
+        } else {
+            echo "<p>Booking failed. Please try again.</p>";
+        }
     } else {
-        echo '<p>No buses found for the selected route.</p>';
+        // Fetch user input for the search form
+        $source = $_POST['source'];
+        $destination = $_POST['destination'];
+
+        // Query the database
+        $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%' AND available_seats > 0";
+        $result = mysqli_query($conn, $sql);?>
+        <div class="head__box">
+        <p>Available Buses</p>
+        <?php
+        // Check if results exist
+        if (mysqli_num_rows($result) > 0) { ?>
+            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                
+                    <div class="search__box">
+                        <div>
+                            <label>Bus Number</label>
+                            <input type="text" value="<?php echo $row['bus_number']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>From</label>
+                            <input type="text" value="<?php echo $row['source']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>To</label>
+                            <input type="text" value="<?php echo $row['destination']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Time</label>
+                            <input type="text" value="<?php echo $row['time']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <input type="text" value="<?php echo $row['date']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Price</label>
+                            <input type="text" value="<?php echo $row['price']; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Available Seats</label>
+                            <input type="text" value="<?php echo $row['available_seats']; ?>" readonly>
+                        </div>
+                        <div>
+                            <form method="POST">
+                                <input type="hidden" name="bus_id" value="<?php echo $row['id']; ?>">
+                                <button class="search__button" type="submit" name="book">Book</button>
+                            </form>
+                        </div>
+                    </div>
+            <?php } ?>
+            </div>
+       <?php } else {
+            echo '<p>No buses found for the selected route.</p>';
+        }
     }
 }
 ?>
+
 
     <div class="head__box">
         <p>Track Your Bus</p>

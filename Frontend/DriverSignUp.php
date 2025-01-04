@@ -5,16 +5,13 @@ if (isset($_POST['submit'])) {
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $phone = $_POST['phone'];
-    $nic = $_POST['nic'];
     $email = $_POST['email'];
     $from = $_POST['dstfrom'];
     $to = $_POST['dstto'];
-    $routeno = $_POST['routeno'];
     $busmodel = $_POST['busmodel'];
     $busno = $_POST['busno'];
     $buscolor = $_POST['buscolor'];
     $buscapacity = $_POST['buscapacity'];
-    $servicetype = $_POST['servicetype'];
     $password = $_POST['password'];
     $cpassword = $_POST['cpassword'];
 
@@ -30,7 +27,7 @@ if (isset($_POST['submit'])) {
             </script>
             ";
         } else {
-            $query = "INSERT INTO driver_signup (fname, lname, phone, nic, email, dstfrom, dstto, routeno, busmodel, busno, buscolor, buscapacity, servicetype, password) VALUES ('$fname', '$lname', '$phone', '$nic', '$email', '$from', '$to', '$routeno', '$busmodel', '$busno', '$buscolor', '$buscapacity', '$servicetype', '$password')";
+            $query = "INSERT INTO driver_signup (fname, lname, phone, email, dstfrom, dstto, busmodel, busno, buscolor, buscapacity, password) VALUES ('$fname', '$lname', '$phone', '$nic', '$email', '$from', '$to', '$busmodel', '$busno', '$buscolor', '$buscapacity', '$password')";
             if ($result = mysqli_query($conn, $query)) {
                 echo "
                 <script>
@@ -111,12 +108,7 @@ if (isset($_POST['submit'])) {
                         <label for="phone">Phone Number</label>
                         <input class="input" type="tel" id="phone" name="phone" placeholder="Your phone number.." required>
                         <div class="error"></div>
-                    </div>
-                    <div class="input__fields">
-                        <label for="nic">NIC Number</label>
-                        <input class="input" type="text" id="nic" name="nic" placeholder="Your NIC number.." required>
-                        <div class="error"></div>
-                    </div>                
+                    </div>             
                     <div class="input__fields">
                         <label for="email">Email</label>
                         <input class="input" type="email" id="email" name="email" placeholder="Your email.." required>
@@ -144,11 +136,6 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="route__and__model">
                         <div class="input__fields">
-                            <label for="routeno">Route Number</label>
-                            <input class="input" type="text" id="routeno" name="routeno" placeholder="Your route number.." required>
-                            <div class="error"></div>
-                        </div>
-                        <div class="input__fields">
                             <label for="busmodel">Bus Model</label>
                             <input class="input" type="text" id="busmodel" name="busmodel" placeholder="Your bus model.." required>
                             <div class="error"></div>
@@ -170,11 +157,6 @@ if (isset($_POST['submit'])) {
                         <div class="input__fields">
                             <label for="buscapacity">Bus Capacity</label>
                             <input class="input" type="text" id="buscapacity" name="buscapacity" placeholder="Your bus capacity.." required>
-                            <div class="error"></div>
-                        </div>
-                        <div class="input__fields">
-                            <label for="servicetype">Service Type</label>
-                            <input class="input" type="text" id="servicetype" name="servicetype" placeholder="Your service type.." required>
                             <div class="error"></div>
                         </div>
                     </div>                    
