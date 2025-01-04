@@ -45,6 +45,10 @@ require_once 'Backend/ConnectDB.php';
                 <img class="passenger__img" src="Frontend\Supportive Files\passenger-black.png" alt="Passenger">
                 <a href="Frontend\PassengerSignIn.php"><p class="selection__buttons">Passenger</p></a>
             </div>
+            <div class="passenger">
+                <img class="passenger__img" src="Frontend\Supportive Files\passenger-black.png" alt="Passenger">
+                <a href="Frontend\admin\AdminSignIn.php"><p class="selection__buttons">Admin</p></a>
+            </div>
         </div>
     </details>
 </section>
@@ -121,7 +125,7 @@ require_once 'Backend/ConnectDB.php';
                         <img class="footer__logo" src="Frontend\Supportive Files\Untitled Project.jpg" width="200px" height="200px" alt="Logo">
                     </div>
                     <div class="Company__Address">
-                        <p>Busfy Bus Tracking & Booking (Pvt) Ltd.</p>
+                        <p>Busify Bus Tracking & Booking (Pvt) Ltd.</p>
                         <p>No. 12/3, Sample Road, Sample City.</p>
                         <p>Hotline: 12345</p>
                         <p>info@busfy.com</p>
@@ -130,7 +134,7 @@ require_once 'Backend/ConnectDB.php';
             </div>
         </div>
         <div class="footer__bottom">
-            <p>All Rights Reserved &copy; 2020</p>
+            <p>All Rights Reserved &copy; 2025</p>
         </div>
     </footer>
 </body>

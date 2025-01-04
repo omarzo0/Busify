@@ -74,4 +74,66 @@ const validateInputs = () => {
         isValidForm = false;
     }
 };
-*/
+*/ // Fetch Data from API
+async function fetchData(url) {
+  const response = await fetch(url);
+  return response.json();
+}
+
+// Update Metrics
+async function updateDashboard() {
+  const busesData = await fetchData("/api/total-buses");
+  const driversData = await fetchData("/api/total-drivers");
+  const passengersData = await fetchData("/api/total-passengers");
+
+  document.getElementById("total-buses").innerText = busesData.total;
+  document.getElementById("total-drivers").innerText = driversData.total;
+  document.getElementById("total-passengers").innerText = passengersData.total;
+}
+
+// Render Charts
+function renderCharts() {
+  const revenueChart = new Chart(
+    document.getElementById("revenueChart").getContext("2d"),
+    {
+      type: "bar",
+      data: {
+        labels: ["Trip 1", "Trip 2", "Trip 3"],
+        datasets: [
+          {
+            label: "Revenue",
+            data: [100, 200, 300],
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+    }
+  );
+
+  const registrationsChart = new Chart(
+    document.getElementById("registrationsChart").getContext("2d"),
+    {
+      type: "line",
+      data: {
+        labels: ["Day 1", "Day 2", "Day 3"],
+        datasets: [
+          {
+            label: "Registrations",
+            data: [5, 15, 20],
+            backgroundColor: "rgba(153, 102, 255, 0.2)",
+            borderColor: "rgba(153, 102, 255, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+    }
+  );
+}
+
+// Initialize Dashboard
+document.addEventListener("DOMContentLoaded", () => {
+  updateDashboard();
+  renderCharts();
+});

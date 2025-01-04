@@ -1,0 +1,96 @@
+/* General Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 0;
+  margin-top: 200px;
+}
+
+.header__quick__links {
+  display: flex;
+  align-items: center;
+}
+
+.header__quick__links a {
+  margin-left: 10px;
+}
+
+/* Sign In Button Styles */
+.btnsignin-popup {
+  background-color: #fff;
+  color: #4b108d;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnsignin-popup:hover {
+  background-color: #ddd;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.dashboard-container h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Chart Container Styles */
+.chart-container {
+  display: inline-block;
+  width: 45%;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .chart-container {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .navigation__a {
+    font-size: 14px;
+  }
+
+  .header__quick__links {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header__quick__links a {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}

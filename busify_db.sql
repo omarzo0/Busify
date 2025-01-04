@@ -3,9 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2025 at 06:30 PM
+-- Generation Time: Jan 03, 2025 at 07:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
+CREATE DATABASE busify_db;
+USE busify_db;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,6 +31,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `buses` (
   `id` int(25) NOT NULL,
+  `bus_number` varchar(25) NOT NULL,
   `source` varchar(50) NOT NULL,
   `destination` varchar(50) NOT NULL,
   `time` time(5) NOT NULL,
@@ -41,8 +44,8 @@ CREATE TABLE `buses` (
 -- Dumping data for table `buses`
 --
 
-INSERT INTO `buses` (`id`, `source`, `destination`, `time`, `date`, `price`, `available_seats`) VALUES
-(1, 'cairo', 'alexandria', '05:00:00.00000', '0000-00-00', '100', '30');
+INSERT INTO `buses` (`id`, `bus_number`, `source`, `destination`, `time`, `date`, `price`, `available_seats`) VALUES
+(1, '500', 'cairo', 'alexandria', '05:00:00.00000', '0000-00-00', '100', '29');
 
 -- --------------------------------------------------------
 
@@ -88,6 +91,32 @@ CREATE TABLE `passenger_signup` (
 -- Dumping data for table `passenger_signup`
 --
 
+-- Table structure for table `admin_signup`
+--
+
+CREATE TABLE `admin_signup` (
+    `id` INT(25) NOT NULL AUTO_INCREMENT,
+    `fname` VARCHAR(50) NOT NULL,
+    `lname` VARCHAR(50) NOT NULL,
+    `phone` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(50) NOT NULL UNIQUE,
+    `password` TEXT NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- Create the drivers table
+
+-- Create the trips table
+CREATE TABLE trips (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    source VARCHAR(100) NOT NULL,
+    destination VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    driver_id INT NOT NULL,
+    FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE CASCADE
+);
 INSERT INTO `passenger_signup` (`id`, `fname`, `lname`, `phone`, `email`, `password`, `cpassword`) VALUES
 (1, 'mohamed', 'yasser', '01018102203', 'mohamedabdelhammed2001@gmail.com', '$2y$10$/SWy13asH35WtwnxpCu0ReT6NL5EvKwR3CjhPAmeQwwLy5oXu0VL6', '$2y$10$nHlwZh67sXc92YQBYwPWyu/H7Hgu2QS2c.XJUID1eVMQLTWoZl0ly');
 
