@@ -19,12 +19,7 @@ if (isset($_POST['submit'])) {
                 // Start the session and redirect to the dashboard if the password is correct
                 session_start();
                 $_SESSION['admin_id'] = $user['id']; // Store user info in session if needed
-                echo "
-                <script>
-                    alert('Login successful!');
-                    window.location.href='AdminDashboard.php';
-                </script>
-                ";
+                header("Location: AdminDashboard.php");
             } else {
                 echo "
                 <script>

@@ -11,7 +11,7 @@ if(isset($_POST["submit"])){
         if(password_verify($password, $hashedPassword)){
             session_start();
             $_SESSION['login'] = true;
-            $_SESSION['email'] = $row['email'];
+            $_SESSION['id'] = $row['id'];
             header("Location: Search&Track.php");
         }else{
             echo "<script>alert('Password is incorrect!')</script>";

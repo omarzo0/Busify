@@ -2,29 +2,23 @@
 require_once '../../../Backend/ConnectDB.php';
 
 $id = $_GET['id']; 
-$query = "SELECT * FROM buses WHERE id = $id";
+$query = "SELECT * FROM buses WHERE bus_number = $id";
 $result = mysqli_query($conn, $query);
 $bus = mysqli_fetch_assoc($result);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
     $bus_number = mysqli_real_escape_string($conn, $_POST['bus_number']);
-    $source = mysqli_real_escape_string($conn, $_POST['source']);
-    $destination = mysqli_real_escape_string($conn, $_POST['destination']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
-    $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
+    $bus_color = mysqli_real_escape_string($conn, $_POST['bus_color']);
+    $bus_model = mysqli_real_escape_string($conn, $_POST['bus_model']);
     $available_seats = mysqli_real_escape_string($conn, $_POST['available_seats']);
 
     $update_query = "UPDATE buses SET 
         bus_number = '$bus_number', 
-        source = '$source', 
-        destination = '$destination', 
-        time = '$time', 
-        date = '$date', 
-        price = '$price', 
+        bus_color = '$bus_color', 
+        bus_model = '$bus_model',
         available_seats = '$available_seats'
-        WHERE id = $id";
+        WHERE bus_number = $id";
 
     if (mysqli_query($conn, $update_query)) {
         header("Location: ../vehicles/vehicles.php?message=Bus updated successfully");
@@ -70,25 +64,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p style="color: red;"><?php echo $error; ?></p>
     <?php } ?>
     <form method="POST" action="edit_vehicle.php?id=<?php echo $id; ?>" class="edit-form">
-        <label for="bus_number">vehicle Number:</label>
+        <label for="bus_number">Bus Number: </label>
         <input type="text" id="bus_number" name="bus_number" value="<?php echo $bus['bus_number']; ?>" required>
 
-        <label for="source">Source:</label>
-        <input type="text" id="source" name="source" value="<?php echo $bus['source']; ?>" required>
+        <label for="source">Bus Model: </label>
+        <input type="text" id="source" name="bus_model" value="<?php echo $bus['bus_model']; ?>" required>
 
-        <label for="destination">Destination:</label>
-        <input type="text" id="destination" name="destination" value="<?php echo $bus['destination']; ?>" required>
+        <label for="destination">Bus Color: </label>
+        <input type="text" id="destination" name="bus_color" value="<?php echo $bus['bus_color']; ?>" required>
 
-        <label for="time">Time:</label>
-        <input type="time" id="time" name="time" value="<?php echo $bus['time']; ?>" required>
-
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" value="<?php echo $bus['date']; ?>" required>
-
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price" value="<?php echo $bus['price']; ?>" required>
-
-        <label for="available_seats">Available Seats:</label>
+        <label for="available_seats">Bus Capacity: </label>
         <input type="text" id="available_seats" name="available_seats" value="<?php echo $bus['available_seats']; ?>" required>
 
         <button type="submit">Update vehicle</button>

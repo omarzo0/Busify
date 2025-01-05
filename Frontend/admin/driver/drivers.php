@@ -1,7 +1,7 @@
 <?php
 require_once '../../../Backend/ConnectDB.php';
 
-$query = "SELECT * FROM driver_signup";
+$query = "SELECT * FROM drivers";
 $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
@@ -40,19 +40,19 @@ $result = mysqli_query($conn, $query);
     <table>
     <tr>
         <th>Name</th>
-        <th>Phone</th>
-        <th>Bus No</th>
-        <th>Bus Model</th>
-        <th>Bus Capacity</th>
+        <th>Phone Number</th>
+        <th>Bus Number</th>
+        <th>Address</th>
+        <th>Email</th>
         <th>Actions</th>
     </tr>
     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
     <tr>
         <td><?php echo $row['fname'] . " " . $row['lname']; ?></td>
-        <td><?php echo $row['phone']; ?></td>
-        <td><?php echo $row['busno']; ?></td>
-        <td><?php echo $row['busmodel']; ?></td>
-        <td><?php echo $row['buscapacity']; ?></td>
+        <td><?php echo $row['phone_number']; ?></td>
+        <td><?php echo $row['bus_number']; ?></td>
+        <td><?php echo $row['address']; ?></td>
+        <td><?php echo $row['email']; ?></td>
         <td>
             <a href="edit_driver.php?id=<?php echo $row['id']; ?>">Edit</a>
             <a href="delete_driver.php?id=<?php echo $row['id']; ?>">Delete</a>

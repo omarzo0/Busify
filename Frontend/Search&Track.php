@@ -1,9 +1,9 @@
 <?php
 require_once '../Backend/ConnectDB.php';
 
-if(!empty($_SESSION['email'])){
-    $email = $_SESSION['email'];
-    $sql = "SELECT fname FROM passenger_signup WHERE email = '$email'";
+if(!empty($_SESSION['id'])){
+    $email = $_SESSION['id'];
+    $sql = "SELECT fname FROM passenger_signup WHERE id = '$email'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 }
@@ -68,10 +68,10 @@ else{
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['book'])) {
         // Fetch the bus ID from the booking form
-        $bus_id = $_POST['bus_id'];
+        $bus_id = $_POST['bus_number'];
 
         // Update the available_seats column in the database
-        $update_sql = "UPDATE buses SET available_seats = available_seats - 1 WHERE id = $bus_id AND available_seats > 0";
+        $update_sql = "UPDATE trips SET available_seats = available_seats - 1 WHERE bus_number = $bus_id AND available_seats > 0";
         if (mysqli_query($conn, $update_sql)) {
             echo "<p>Booking successful! Seat reserved.</p>";
         } else {
@@ -81,16 +81,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Fetch user input for the search form
         $source = $_POST['source'];
         $destination = $_POST['destination'];
+        // Query to get the trip and associated driver and bus details
+    $query_trip = "
+    SELECT trips.*, drivers.fname, drivers.lname, buses.bus_model 
+    FROM trips 
+    INNER JOIN drivers ON trips.bus_number = drivers.bus_number
+    INNER JOIN buses ON trips.bus_number = buses.bus_number
+    WHERE trips.source LIKE '%$source%' AND trips.destination LIKE '%$destination%' AND trips.available_seats > 0 ";
 
-        // Query the database
-        $sql = "SELECT * FROM buses WHERE source LIKE '%$source%' AND destination LIKE '%$destination%' AND available_seats > 0";
-        $result = mysqli_query($conn, $sql);?>
+        $result_trip = mysqli_query($conn, $query_trip);?>
         <div class="head__box">
         <p>Available Buses</p>
         <?php
         // Check if results exist
-        if (mysqli_num_rows($result) > 0) { ?>
-            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+        if (mysqli_num_rows($result_trip) > 0) { ?>
+            <?php while ($row = mysqli_fetch_assoc($result_trip)) { ?>
                 
                     <div class="search__box">
                         <div>
@@ -123,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div>
                             <form method="POST">
-                                <input type="hidden" name="bus_id" value="<?php echo $row['id']; ?>">
+                                <input type="hidden" name="bus_number" value="<?php echo $row['bus_number']; ?>">
                                 <button class="search__button" type="submit" name="book">Book</button>
                             </form>
                         </div>

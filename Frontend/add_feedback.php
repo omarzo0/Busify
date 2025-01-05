@@ -1,18 +1,14 @@
 <?php
 require_once '../Backend/ConnectDB.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['passenger_id'])) {
+if (!isset($_SESSION['login']) || $_SESSION['id'] != true) {
     header("Location: ../index.php");
     exit();
 }
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $passenger_id = $_SESSION['passenger_id'];
+    $passenger_id = $_SESSION['id'];
     $feedback_text = mysqli_real_escape_string($conn, $_POST['feedback_text']);
 
     // Validate inputs
@@ -47,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
         <div class="header__quick__links">
             <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
-            <a href="../AdminSignIn.php">
-                <button class="btnsignin-popup" onclick="logout()">Logout</button>
+            <a href="../Backend/logout.php">
+                <button class="btnsignin-popup">Logout</button>
             </a>
         </div>
     </nav>
@@ -57,19 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="dashboard-container">
         <h1>Submit Feedback</h1>
         <form method="POST" action="add_feedback.php">
-            <input type="hidden" name="passenger_id" value="<?php echo $_SESSION['passenger_id']; ?>"> <!-- Session ID -->
+            <input type="hidden" name="passenger_id" value="<?php echo $_SESSION['id']; ?>"> <!-- Session ID -->
             <label for="feedback_text">Your Feedback:</label>
             <textarea name="feedback_text" id="feedback_text" rows="5" required></textarea>
             <br>
             <button type="submit">Submit Feedback</button>
         </form>
     </div>
-
-<script>
-    function logout() {
-        sessionStorage.clear();
-        localStorage.clear();
-    }
-</script>
 </body>
 </html>

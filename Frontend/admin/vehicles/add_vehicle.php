@@ -6,18 +6,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bus_number = mysqli_real_escape_string($conn, $_POST['bus_number']);
     $source = mysqli_real_escape_string($conn, $_POST['source']);
     $destination = mysqli_real_escape_string($conn, $_POST['destination']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
-    $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
     $available_seats = mysqli_real_escape_string($conn, $_POST['available_seats']);
 
     // Validate form data
-    if (empty($bus_number) || empty($source) || empty($destination) || empty($time) || empty($date) || empty($price) || empty($available_seats)) {
+    if (empty($bus_number) || empty($source) || empty($destination) || empty($available_seats)) {
         $error = "All fields are required.";
     } else {
         // Insert into database
-        $query = "INSERT INTO buses (bus_number, source, destination, time, date, price, available_seats)
-                  VALUES ('$bus_number', '$source', '$destination', '$time', '$date', '$price', '$available_seats')";
+        $query = "INSERT INTO buses (bus_number, bus_model, bus_color, available_seats)
+                  VALUES ('$bus_number', '$source', '$destination', '$available_seats')";
 
         if (mysqli_query($conn, $query)) {
             $success = "Bus added successfully.";
@@ -65,25 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p style="color: green;"><?php echo $success; ?></p>
     <?php } ?>
     <form method="POST" action="../vehicles/add_vehicle.php" class="add-form">
-        <label for="bus_number">Bus Number:</label>
+        <label for="bus_number">Bus Number: </label>
         <input type="text" id="bus_number" name="bus_number" required>
 
-        <label for="source">Source:</label>
+        <label for="source">Bus Model: </label>
         <input type="text" id="source" name="source" required>
 
-        <label for="destination">Destination:</label>
+        <label for="destination">Bus Color: </label>
         <input type="text" id="destination" name="destination" required>
 
-        <label for="time">Time:</label>
-        <input type="time" id="time" name="time" required>
-
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
-
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price" required>
-
-        <label for="available_seats">Available Seats:</label>
+        <label for="available_seats">Bus Capacity: </label>
         <input type="text" id="available_seats" name="available_seats" required>
 
         <button type="submit">Add Bus</button>

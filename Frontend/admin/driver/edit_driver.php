@@ -3,9 +3,17 @@ require_once '../../../Backend/ConnectDB.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $query = "SELECT * FROM driver_signup WHERE id = '$id'";
-    $result = mysqli_query($conn, $query);
-    $driver = mysqli_fetch_assoc($result);
+
+    // Query to get the trip and associated driver and bus details
+    $query_trip = "
+        SELECT trips.*, drivers.*, buses.* 
+        FROM trips 
+        INNER JOIN drivers ON trips.bus_number = drivers.bus_number
+        INNER JOIN buses ON trips.bus_number = buses.bus_number
+        WHERE trips.id = '$id'
+    ";
+    $result_trip = mysqli_query($conn, $query_trip);
+    $driver = mysqli_fetch_assoc($result_trip);
 }
 
 if (isset($_POST['update'])) {
@@ -78,19 +86,27 @@ if (isset($_POST['update'])) {
             </div>
             <div class="input__fields">
                 <label for="phone">Phone</label>
-                <input class="input" type="text" id="phone" name="phone" value="<?php echo $driver['phone']; ?>" required>
+                <input class="input" type="text" id="phone" name="phone" value="<?php echo $driver['phone_number']; ?>" required>
+            </div>
+            <div class="input__fields">
+                <label for="address">Address</label>
+                <input class="input" type="text" id="address" name="address" value="<?php echo $driver['address']; ?>" required>
+            </div>
+            <div class="input__fields">
+                <label for="email">Email</label>
+                <input class="input" type="text" id="email" name="email" value="<?php echo $driver['email']; ?>" required>
             </div>
             <div class="input__fields">
                 <label for="busno">Bus No</label>
-                <input class="input" type="text" id="busno" name="busno" value="<?php echo $driver['busno']; ?>" required>
+                <input class="input" type="text" id="busno" name="busno" value="<?php echo $driver['bus_number']; ?>" required>
             </div>
             <div class="input__fields">
                 <label for="busmodel">Bus Model</label>
-                <input class="input" type="text" id="busmodel" name="busmodel" value="<?php echo $driver['busmodel']; ?>" required>
+                <input class="input" type="text" id="busmodel" name="busmodel" value="<?php echo $driver['bus_model']; ?>" required>
             </div>
             <div class="input__fields">
                 <label for="buscapacity">Bus Capacity</label>
-                <input class="input" type="text" id="buscapacity" name="buscapacity" value="<?php echo $driver['buscapacity']; ?>" required>
+                <input class="input" type="text" id="buscapacity" name="buscapacity" value="<?php echo $driver['available_seats']; ?>" required>
             </div>
             <button class="submit__button" type="submit" name="update">Update Driver</button>
         </form>
