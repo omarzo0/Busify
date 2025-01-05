@@ -1,7 +1,9 @@
 <?php
 require_once '../../../Backend/ConnectDB.php';
 
-$query = "SELECT * FROM passenger_signup";
+$query = "SELECT f.id, f.feedback_text, f.created_at, p.fname, p.lname 
+          FROM feedback f
+          INNER JOIN passenger_signup p ON f.passenger_id = p.id";
 $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
@@ -9,10 +11,10 @@ $result = mysqli_query($conn, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passenger list</title>
+    <title>Feedback List</title>
     <link type="text/css" rel="stylesheet" href="../../template.css">
-    <link type="text/css" rel="stylesheet" href="../../SignUpSignIn.css">
     <link type="text/css" rel="stylesheet" href="../css/adminDashboard.css">
+
 </head>
 <body>
 <header>
@@ -32,23 +34,19 @@ $result = mysqli_query($conn, $query);
         </nav>
 </header>
 
-<!-- Passenger Dashboard -->
 <div class="dashboard-container">
-    <h1>Passengers List</h1>
-    <a class="" href="Add_Passenger.php">Add Passenger</a>
-    <a class="" href="feedback.php">Passengers Feedback</a>
+    <h1>Feedback List</h1>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
+            <th>Passenger Name</th>
+            <th>Feedback</th>
+            <th>Submitted At</th>
         </tr>
         <?php while ($row = mysqli_fetch_assoc($result)) { ?>
         <tr>
             <td><?php echo $row['fname'] . " " . $row['lname']; ?></td>
-            <td><?php echo $row['phone']; ?></td>
-            <td><?php echo $row['email']; ?></td>
-           
+            <td><?php echo $row['feedback_text']; ?></td>
+            <td><?php echo $row['created_at']; ?></td>
         </tr>
         <?php } ?>
     </table>

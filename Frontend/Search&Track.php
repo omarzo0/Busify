@@ -42,6 +42,8 @@ else{
 <!--=================================================Header End===============================================================-->
 <div class="welcome__user">
     <p>Hello, <?php echo $row['fname']; ?>!</p>
+    <a class="" href="add_feedback.php">Add Feedback</a>
+
 </div>
 <div>
 <form method="post">
@@ -156,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+    
 </div>
 
 <!--=================================================Footer Area==============================================================-->

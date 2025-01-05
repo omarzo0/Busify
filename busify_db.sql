@@ -117,6 +117,14 @@ CREATE TABLE trips (
     driver_id INT NOT NULL,
     FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE CASCADE
 );
+CREATE TABLE feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    passenger_id INT NOT NULL,
+    feedback_text TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (passenger_id) REFERENCES passenger_signup(id)
+);
+
 INSERT INTO `passenger_signup` (`id`, `fname`, `lname`, `phone`, `email`, `password`, `cpassword`) VALUES
 (1, 'mohamed', 'yasser', '01018102203', 'mohamedabdelhammed2001@gmail.com', '$2y$10$/SWy13asH35WtwnxpCu0ReT6NL5EvKwR3CjhPAmeQwwLy5oXu0VL6', '$2y$10$nHlwZh67sXc92YQBYwPWyu/H7Hgu2QS2c.XJUID1eVMQLTWoZl0ly');
 
