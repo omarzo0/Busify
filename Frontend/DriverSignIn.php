@@ -1,26 +1,46 @@
 <?php
-require_once '../Backend/ConnectDB.php';
+require_once '../Backend/ConnectDB.php'; // Include the database connection file
 
-if(isset($_POST["submit"])){
-    $email = $_POST['email'];
+if (isset($_POST["submit"])) {
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
-    $result = mysqli_query($conn, "SELECT * FROM driver_signup WHERE email = '$email'");
-    $row = mysqli_fetch_assoc($result);
-    if (mysqli_num_rows($result)>0){
-        if($row['password'] == $password){
-            
-            $_SESSION['login'] = true;
-            $_SESSION['email'] = $row['email'];
-            header("Location: ");
-        }else{
-            echo "<script>alert('Password is incorrect!')</script>";
+
+    // Check if email and password are not empty
+    if (!empty($email) && !empty($password)) {
+        // Use a prepared statement to prevent SQL injection
+        $stmt = $conn->prepare("SELECT email, bus_number, cpassword FROM driver_signup WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedpassword = $row['cpassword'];
+            // Verify the password
+            if (password_verify($password, $hashedpassword )) {
+                $_SESSION['login'] = true;
+                $_SESSION['bus_number'] = $row['bus_number'];
+
+                // Redirect to driver dashboard
+                header("Location: driver.php");
+                exit;
+            } else {
+                echo "<script>alert('Password is incorrect!');</script>";
+            }
+        } else {
+            echo "<script>alert('Email is incorrect or not registered!');</script>";
         }
-    }else{
-        echo "<script>alert('Email is incorrect or not registered!')</script>";
+
+        // Close the statement and connection
+        $stmt->close();
+    } else {
+        echo "<script>alert('Please fill in all fields!');</script>";
     }
 }
 
+$conn->close(); // Close the database connection
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +74,7 @@ if(isset($_POST["submit"])){
             <img class="bus__img" src="Supportive Files\HomeBus.png" alt="Bus">
         </div>
         <div class="driver__signin__details">
-            <form id="form" action="DriverSignIn.php" method="POST"onsubmit="return validateInputs();">
+            <form id="form" action="DriverSignIn.php" method="POST" onsubmit="return validateInputs();">
                 <div class="password__details">
                     <div class="input__fields">
                         <label for="email">Email</label>
@@ -76,10 +96,7 @@ if(isset($_POST["submit"])){
                         </div>
                     </div>                  
                     <div>
-                        <button class="submit__button" type="submit" name="signup">Sign In</button>
-                    </div>
-                    <div>
-                        <p>Are You Don't Have An Account? <a href="DriverSignUp.php">Sign Up</a></p>
+                        <button class="submit__button" type="submit" name="submit">Sign In</button>
                     </div>
                 </div>                    
             </form>
