@@ -8,8 +8,8 @@ require_once 'Backend/ConnectDB.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUSIFY</title>
-    <link  type="text/css" rel="stylesheet" href="Frontend\template.css">
-    <link  type="text/css" rel="stylesheet" href="Frontend\index.css">
+    <link   rel="stylesheet" href="frontend/css/global.css">
+    <link   rel="stylesheet" href="frontend/css/index.css">
 
 </head>
 <body>
@@ -23,48 +23,31 @@ require_once 'Backend/ConnectDB.php';
                     <a class="navigation__a" href="#about__us">About</a>
                     <a class="navigation__a" href="#our__services">Services</a>
                     <a class="navigation__a" href="#footer">Contact</a>                
-                    <a href="#getstarted"><button class="btnsignin-popup">Sign In</button></a>
-                    <a href="#getstarted"><button class="btnsignup-popup">Sign Up</button></a>
-                    <!--<img class="profile__img" src="Frontend\Supportive Files\R (4).jpg" alt="profile">-->
+                    <a href="Frontend\PassengerSignIn.php"><button class="btnsignin-popup">Sign In</button></a>
                 </div>
         </nav>
     </header>
 <!--=================================================Header End===============================================================-->
-<section id="home__img"></section>
-    <div id="home__img__div">
-        <img class="top__bus__img" src="Frontend\Supportive Files\HomeBus.png" alt="Home Image">
-    </div>
-    <details id="details">
-        <summary class="get__started__button" id = "getstarted">GET STARTED</summary>
-        <div class="selection">
-            <div class="driver">
-                <img class="driver__img" src="Frontend\Supportive Files\driver-black.png" alt="Driver">
-                <a href="Frontend\PassengerSignIn.php"><p class="selection__buttons">Sign In</p></a>
-            </div>
-            <div class="passenger">
-                <img class="passenger__img" src="Frontend\Supportive Files\passenger-black.png" alt="Passenger">
-                <a href="Frontend\PassengerSignUp.php"><p class="selection__buttons">Sign Up</p></a>
-            </div>
-        </div>
-    </details>
-</section>
 
 <!--=================================================About Us===============================================================-->
 
 <!--<script src="HomePage.js"></script>-->
+<div class="aboutus">
+  <h2 class="home__h2">About Busify</h2>
 
-<div id="about__us"></div>
-    <h2 class="home__h2">About Us</h2>
-</div>
 <div class="about__us__div">        
-    <div class="home__about__us">
-        <p class="home__p">Lorem ipsum dolor sit amet consectetur. Elit sapien sodales duis nec eget lacus in pretium sed. Ac donec nunc aliquam non nunc dapibus a enim viverra. Odio ipsum tempus sagittis ornare ornare. Nunc mi diam enim elit risus. Ultrices nisi urna vulputate sed senectus justo aliquam. Luctus risus dignissim eget non. Tellus vulputate eu posuere amet volutpat enim at lacus non. Molestie arcu dignissim viverra sapien quam nec bibendum nisl eu. Sagittis accumsan nisl mauris cras integer quam tempus urna ornare. Imperdiet fringilla tellus et nec. Lacinia sed venenatis sodales a sit amet sed. In sed elit lectus sit. Nunc, aliquam, aenean, amet, sed, amet, amet</p>
-    </div>
-    <div>
-        <img class="down__bus__img" src="Frontend\Supportive Files\HomeBushalf.png" alt="Home Image">
-    </div>
+  <div class="home__about__us">
+    <p class="home__p">
+      Welcome to <strong>Busify</strong>, your trusted companion for efficient and seamless bus reservations. Our mission is to revolutionize the way you book, track, and travel. With a user-friendly platform, Busify connects you to a network of reliable buses, making your travel planning effortless and stress-free.<br><br>
+      At Busify, we value your time and convenience. Whether you're commuting for work, planning a family vacation, or embarking on an adventure, we ensure a smooth reservation process, real-time tracking, and secure payment options. Choose Busify for reliable service, unparalleled comfort, and a journey tailored to your needs. Your satisfaction is our drive.<br><br>
+      Join the Busify family today and experience the future of bus reservations!
+    </p>
+  </div>
+  <div>
+    <img class="about__bus__img" src="Frontend\Supportive Files\HomeBushalf.png" alt="About Busify">
+  </div>
 </div>
-
+</div>
 <!--=================================================Our Services===============================================================-->
 
     <section id="our__services"></section>
@@ -99,23 +82,17 @@ require_once 'Backend/ConnectDB.php';
                     <a class="footer__a" href="indec.php">Home</a>
                     <a class="footer__a" href="#about__us">About Us</a>
                     <a class="footer__a" href="#">Privacy Policy</a>
-                    <a class="footer__a" href="Frontend/DriverSignIn.php">Sign in as a Driver</a>
-                    <a class="footer__a" href="Frontend/PassengerSignIn.php">Sign in as a Passenger</a>
-                </div>
-                <div class="footer__quick__links">
-                    <a class="footer__a" href="#">FAQ</a>
                     <a class="footer__a" href="#">Contact Us</a>
-                    <a class="footer__a" href="#">Terms</a>
-                    <a class="footer__a" href="Frontend/DriverSignUp.php">Sign up as a Driver</a>
-                    <a class="footer__a" href="Frontend/PassengerSignUp.php">Sign up as a Passenger</a>
+
                 </div>
-                <div>
-                    <p class="footer__a">Follow Us On</p>
-                    <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-facebook-100 (1).png" alt="Facebook"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-twitter-100.png" alt="Twitter"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-instagram-100.png" alt="Instagram"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-linkedin-100.png" alt="LinkedIn"></a>
-                </div>
+          
+                <div class="socialmedia__container">
+  <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-facebook-100 (1).png" alt="Facebook"></a>
+  <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-twitter-100.png" alt="Twitter"></a>
+  <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-instagram-100.png" alt="Instagram"></a>
+  <a href="#"><img class="socialmedia__logo" src="Frontend\Supportive Files\icons8-linkedin-100.png" alt="LinkedIn"></a>
+</div>
+
                 <div class="company__detail">
                     <div>
                         <img class="footer__logo" src="Frontend\Supportive Files\Untitled Project.jpg" width="200px" height="200px" alt="Logo">
@@ -126,13 +103,12 @@ require_once 'Backend/ConnectDB.php';
                         <p>Hotline: 12345</p>
                         <p>info@busfy.com</p>
                     </div>
+                    <p>All Rights Reserved &copy; 2025</p>
                 </div>
             </div>
         </div>
-        <div class="footer__bottom">
-            <p>All Rights Reserved &copy; 2025</p>
-        </div>
     </footer>
+    
 </body>
 </html>
 

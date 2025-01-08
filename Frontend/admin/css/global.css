@@ -79,61 +79,6 @@ form {
     padding: 10px 15px;
   }
 }
-
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0; /* Position sidebar on the left side */
-  width: 250px; /* Adjust the width of the sidebar */
-  height: 100%; /* Full height of the screen */
-  background-color: #4b108d; /* Purple background for the sidebar */
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo Styling */
-.sidebar .logo {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 30px;
-  display: block;
-}
-
-/* Sidebar Links */
-.sidebar__links a {
-  display: block;
-  color: white;
-  padding: 15px;
-  font-size: 18px;
-  text-decoration: none;
-  margin: 5px 0;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-/* Hover Effect on Links */
-.sidebar__links a:hover {
-  background-color: #3e0c76; /* Darken when hovered */
-}
-
-/* Button Style for Logout */
-.sidebar__links .btnsignin-popup {
-  background-color: #4b108d;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.sidebar__links .btnsignin-popup:hover {
-  background-color: #3e0c76;
-}
-
 /* Page Content Area */
 .main-content {
   margin-left: 250px; /* Adjust main content to the right of the sidebar */

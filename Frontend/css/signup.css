@@ -1,0 +1,133 @@
+/* Main Container */
+.driver__signin__page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Bus Image */
+.bus__img {
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Form Section */
+.driver__signin__details {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Input Fields */
+.input__fields {
+  margin-bottom: 20px;
+}
+
+.input__fields label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.input__fields .input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.input__fields .input:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+}
+
+/* Error Messages */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Other Options */
+.other__opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.forgot__password a {
+  text-decoration: none;
+  color: #00bcd4;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.forgot__password a:hover {
+  text-decoration: underline;
+}
+
+.remember__me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* Submit Button */
+.submit__button {
+  width: 100%;
+  padding: 10px;
+  background-color: #00bcd4;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit__button:hover {
+  background-color: #008c9e;
+}
+
+/* Sign-Up Link */
+.password__details p {
+  text-align: center;
+  font-size: 14px;
+  color: #333333;
+}
+
+.password__details p a {
+  color: #00bcd4;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.password__details p a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .driver__signin__page {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .bus__img {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,190 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+header {
+  background-color: black;
+  color: #ffffff;
+  padding: 1rem 0;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.navigation .logo {
+  width: 150px;
+}
+
+.header__quick__links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navigation__a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navigation__a:hover {
+  color: #ffcc00;
+}
+
+.btnsignin-popup {
+  background-color: #00bcd4;
+  color: #004d99;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btnsignin-popup:hover {
+  background-color: #ffd633;
+}
+
+/* General Footer Styling */
+#footer {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px; /* Add spacing between divs */
+}
+
+/* Individual Div Styling */
+.footer > div {
+  flex: 1; /* Allow sections to grow/shrink equally */
+  min-width: 200px; /* Set minimum width for responsiveness */
+}
+
+/* Quick Links Section */
+.footer__quick__links {
+  display: flex;
+  flex-direction: column;
+  gap: 35px; /* Spacing between links */
+  margin-left: 150px;
+  margin-top: 25px;
+}
+
+.footer__a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.footer__a:hover {
+  color: #00bcd4; /* Accent color on hover */
+}
+
+/* Social Media Section */
+/* Parent container of social media logos */
+.socialmedia__container {
+  display: flex;
+  flex-direction: row; /* Ensures icons are in a row */
+  align-items: center; /* Vertically aligns icons */
+  justify-content: center; /* Centers icons horizontally */
+  gap: 10px; /* Adds space between the icons */
+  margin-top: 25px;
+}
+
+/* Individual Social Media Icons */
+.socialmedia__logo {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+.socialmedia__logo:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/* Company Details Section */
+.company__detail {
+  text-align: center;
+  max-width: 300px;
+}
+
+.footer__logo {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.Company__Address p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.Company__Address {
+  margin-bottom: 10px;
+}
+
+/* Footer Frame */
+.frame {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px; /* Spacing between sections */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__quick__links {
+    align-items: center;
+  }
+
+  .company__detail {
+    text-align: center;
+  }
+
+  .footer > div {
+    margin-bottom: 20px; /* Additional spacing for stacked layout */
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about__us__div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .our__services__div {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -26,29 +26,46 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle List</title>
-    <link type="text/css" rel="stylesheet" href="../../template.css">
     <link type="text/css" rel="stylesheet" href="../css/adminDashboard.css">
+    <link type="text/css" rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
-<header>
-<nav class="navigation">
-        <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
-        <div class="header__quick__links">
-        <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
-        <a class="navigation__a" href="../AdminProfile.php">My profile</a>
-            <a class="navigation__a" href="../driver/Drivers.php">Driver List</a>
-            <a class="navigation__a" href="../trips/Trips.php">Trips List</a>
-            <a class="navigation__a" href="../passengers/passengers.php">Passengers List</a>
-            <a class="navigation__a" href="../vehicles/vehicles.php">Vehicle List</a>
-            <a href="../AdminSignIn.php">
-    <button class="btnsignin-popup" onclick="logout()">Logout</button>
-</a>
-        </div>
-        </nav>
-</header>
+<aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../../Supportive Files/logo.png" alt="logo" />
+      <h2>Busify</h2>
+    </div>
+    <ul class="sidebar-links">
+    
+      <li>
+        <a href="../AdminDashboard.php">
+          <span class="material-symbols-outlined"></span>Dashboard</a>
+      </li>
+      <li>
+        <a href="../AdminProfile.php"><span class="material-symbols-outlined"></span>My profile</a>
+      </li>
+      <li>
+        <a href="../driver/Drivers.php"><span class="material-symbols-outlined"></span>driver list</a>
+      </li>
+     
+      <li>
+        <a  href="../trips/Trips.php"><button><span class="material-symbols-outlined"></span></button>Trip List</a>
+      </li>
+      <li>
+        <a  href="../passengers/passengers.php"><button><span class="material-symbols-outlined"></span></button>passengers list</a>
+      </li>
+      <li>
+        <a href="../vehicles/vehicles.php"><button><span class="material-symbols-outlined"></span></button>vehicle List</a>
+      </li>
+      <li>
+        <a href="../passengerSignIn.php"><button><span class="material-symbols-outlined"></span></button>Logout</a>
+      </li>
+    </ul>
+  </aside>
 
 <div class="dashboard-container">
     <h1>Vehicle List</h1>
+    <a class="but11" href="add_vehicle.php">Add vehicle</a>
     <table>
         <tr>
             <th>Bus Number</th>

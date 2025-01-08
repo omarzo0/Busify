@@ -35,48 +35,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit vehicle</title>
-    <link type="text/css" rel="stylesheet" href="../../template.css">
-    <link type="text/css" rel="stylesheet" href="../css/adminDashboard.css">
-    <link rel="stylesheet" href="../../SignUpSignIn.css">
-
+    <link type="text/css" rel="stylesheet" href="../css/Add_drive.css">
+    <link type="text/css" rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
-<header>
-<nav class="navigation">
-        <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
-        <div class="header__quick__links">
-        <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
-        <a class="navigation__a" href="../AdminProfile.php">My profile</a>
-            <a class="navigation__a" href="../driver/Drivers.php">driver list</a>
-            <a class="navigation__a" href="../trips/Trips.php">trips list</a>
-            <a class="navigation__a" href="../passengers/passengers.php">passengers list</a>
-            <a class="navigation__a" href="../vehicles/vehicles.php">vehicle list</a>
-            <a href="../AdminSignIn.php">
-    <button class="btnsignin-popup" onclick="logout()">Logout</button>
-</a>
-        </div>
-        </nav>
-</header>
+<aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../../Supportive Files/logo.png" alt="logo" />
+      <h2>Busify</h2>
+    </div>
+    <ul class="sidebar-links">
+    
+      <li>
+        <a href="../AdminDashboard.php">
+          <span class="material-symbols-outlined"></span>Dashboard</a>
+      </li>
+      <li>
+        <a href="../AdminProfile.php"><span class="material-symbols-outlined"></span>My profile</a>
+      </li>
+      <li>
+        <a href="../driver/Drivers.php"><span class="material-symbols-outlined"></span>driver list</a>
+      </li>
+     
+      <li>
+        <a  href="../trips/Trips.php"><button><span class="material-symbols-outlined"></span></button>Trip List</a>
+      </li>
+      <li>
+        <a  href="../passengers/passengers.php"><button><span class="material-symbols-outlined"></span></button>passengers list</a>
+      </li>
+      <li>
+        <a href="../vehicles/vehicles.php"><button><span class="material-symbols-outlined"></span></button>vehicle List</a>
+      </li>
+      <li>
+        <a href="../passengerSignIn.php"><button><span class="material-symbols-outlined"></span></button>Logout</a>
+      </li>
+    </ul>
+  </aside>
 
-<div class="dashboard-container">
-    <h1>Edit vehicle</h1>
+  <div class="driver__signup__page">
+  <h1>Edit vehicle</h1>
     <?php if (!empty($error)) { ?>
         <p style="color: red;"><?php echo $error; ?></p>
     <?php } ?>
     <form method="POST" action="edit_vehicle.php?id=<?php echo $id; ?>" class="edit-form">
+    <div class="input__fields">
         <label for="bus_number">Bus Number: </label>
-        <input type="text" id="bus_number" name="bus_number" value="<?php echo $bus['bus_number']; ?>" required>
+        <input class="input" type="text" id="bus_number" name="bus_number" value="<?php echo $bus['bus_number']; ?>" required>
+        </div>
+        <div class="input__fields">
 
         <label for="source">Bus Model: </label>
-        <input type="text" id="source" name="bus_model" value="<?php echo $bus['bus_model']; ?>" required>
+        <input class="input" type="text" id="source" name="bus_model" value="<?php echo $bus['bus_model']; ?>" required>
+        </div>
+        <div class="input__fields">
 
         <label for="destination">Bus Color: </label>
-        <input type="text" id="destination" name="bus_color" value="<?php echo $bus['bus_color']; ?>" required>
+        <input class="input" type="text" id="destination" name="bus_color" value="<?php echo $bus['bus_color']; ?>" required>
+        </div>
+        <div class="input__fields">
 
         <label for="available_seats">Bus Capacity: </label>
-        <input type="text" id="available_seats" name="available_seats" value="<?php echo $bus['available_seats']; ?>" required>
+        <input class="input" type="text" id="available_seats" name="available_seats" value="<?php echo $bus['available_seats']; ?>" required>
+        </div>
 
-        <button type="submit">Update vehicle</button>
+        <button class="submit__button" type="submit">Update vehicle</button>
     </form>
 </div>
 

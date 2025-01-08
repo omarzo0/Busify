@@ -1,7 +1,88 @@
+/* General Body Styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f7fa;
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
-  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Driver Signup Page Container */
+.driver__signup__page {
+  width: 90%;
+  max-width: 500px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Fields */
+.input__fields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.input__fields label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.input__fields .input {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.input__fields .input:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+}
+
+/* Submit Button */
+.submit__button {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #00bcd4;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit__button:hover {
+  background-color: #008c9e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .driver__signup__page {
+    padding: 20px;
+  }
+
+  .input__fields label {
+    font-size: 12px;
+  }
+
+  .input__fields .input {
+    font-size: 12px;
+  }
+
+  .submit__button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }

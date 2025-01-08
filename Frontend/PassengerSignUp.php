@@ -59,26 +59,23 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Busify Passenger</title>
-    <link  type="text/css" rel="stylesheet" href="template.css">
-    <link  type="text/css" rel="stylesheet" href="SignUpSignIn.css">
+    <link   rel="stylesheet" href="../frontend/css/global.css">
+    <link   rel="stylesheet" href="../frontend/css/signup.css">
     
 </head>
 <body>
 
 <!--===============================================Header Start===============================================================-->
 <header>
-    <nav class="navigation">
-        <img class="logo" src="Supportive Files\logo name.png" alt="Logo">
-            <div class="header__quick__links">
-                <a class="navigation__a" href="../index.php">Home</a>
-                <a class="navigation__a" href="../index.php">About</a>
-                <a class="navigation__a" href="../index.php">Services</a>
-                <a class="navigation__a" href="#footer">Contact</a>                
-                <a href="PassengerSignIn.php"><button class="btnsignin-popup">Sign In</button></a>
-                <!--<a href="PassengerSignUp.php"><button class="btnsignup-popup">Sign Up</button></a>-->
-                <!--<img class="profile__img" src="Supportive Files\R (4).jpg" alt="profile">-->
-            </div>
-    </nav>
+        <nav class="navigation">
+            <img class="logo" src="../Frontend\Supportive Files\logo name.png" alt="Logo">
+                <div class="header__quick__links">
+                    <a class="navigation__a" href="#">Home</a>
+                    <a class="navigation__a" href="#our__services">Services</a>
+                    <a class="navigation__a" href="#footer">Contact</a>                
+                    <a href="../Frontend\PassengerSignIn.php"><button class="btnsignin-popup">Login</button></a>
+                </div>
+        </nav>
 </header>
 <!--=================================================Header End===============================================================-->
     <div class="driver__signin__page">
@@ -124,15 +121,12 @@ if (isset($_POST['submit'])) {
                     </div> 
                 </div>
                     <div class="google__signin">
-                        <p id="another__login">Or Sign in with</p>
-                        <div class="google__logo__div">
-                            <a href="#"><img class="socialmedia__logo" src="Supportive Files\icons8-google-100.png" alt="Google"></a>
-                        </div>
+                     
                         <div>
                             <button class="submit__button" type="submit" name="submit">Sign Up</button>
                         </div>
                         <div class="password__details">
-                            <p>Are You Don't Have An Account? <a href="PassengerSignIn.php">Sign In</a></p>
+                            <p>Are You Don't Have An Account? <a href="PassengerSignIn.php">Login</a></p>
                         </div>
                     </div>          
             </form>
@@ -140,45 +134,37 @@ if (isset($_POST['submit'])) {
     </div>    
 
 <!--=================================================Footer Area==============================================================-->
-    <footer id="footer">
+<footer id="footer">
         <div class="footer">
             <div class="frame">
                 <div class="footer__quick__links">
-                    <a class="footer__a" href="../index.php">Home</a>
-                    <a class="footer__a" href="../index.php">About Us</a>
-                    <a class="footer__a" href="../index.php">Privacy Policy</a>
-                    <a class="footer__a" href="DriverSignIn.php">Sign in as a Driver</a>
-                    <a class="footer__a" href="PassengerSignIn.php">Sign in as a Passenger</a>
-                </div>
-                <div class="footer__quick__links">
-                    <a class="footer__a" href="#">FAQ</a>
+                    <a class="footer__a" href="indec.php">Home</a>
+                    <a class="footer__a" href="#about__us">About Us</a>
+                    <a class="footer__a" href="#">Privacy Policy</a>
                     <a class="footer__a" href="#">Contact Us</a>
-                    <a class="footer__a" href="#">Terms</a>
-                    <a class="footer__a" href="DriverSignUp.php">Sign up as a Driver</a>
-                    <a class="footer__a" href="PassengerSignUp.php">Sign up as a Passenger</a>
+
                 </div>
-                <div>
-                    <p class="footer__a">Follow Us On</p>
-                    <a href="#"><img class="socialmedia__logo" src="Supportive Files\icons8-facebook-100 (1).png" alt="Facebook"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Supportive Files\icons8-twitter-100.png" alt="Twitter"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Supportive Files\icons8-instagram-100.png" alt="Instagram"></a>
-                    <a href="#"><img class="socialmedia__logo" src="Supportive Files\icons8-linkedin-100.png" alt="LinkedIn"></a>
-                </div>
+          
+                <div class="socialmedia__container">
+  <a href="#"><img class="socialmedia__logo" src="../Frontend\Supportive Files\icons8-facebook-100 (1).png" alt="Facebook"></a>
+  <a href="#"><img class="socialmedia__logo" src="../Frontend\Supportive Files\icons8-twitter-100.png" alt="Twitter"></a>
+  <a href="#"><img class="socialmedia__logo" src="../Frontend\Supportive Files\icons8-instagram-100.png" alt="Instagram"></a>
+  <a href="#"><img class="socialmedia__logo" src="../Frontend\Supportive Files\icons8-linkedin-100.png" alt="LinkedIn"></a>
+</div>
+
                 <div class="company__detail">
                     <div>
-                        <img class="footer__logo" src="Supportive Files\Untitled Project.jpg" width="200px" height="200px" alt="Logo">
+                        <img class="footer__logo" src="../Frontend\Supportive Files\Untitled Project.jpg" width="200px" height="200px" alt="Logo">
                     </div>
                     <div class="Company__Address">
-                        <p>Busfy Bus Tracking & Booking (Pvt) Ltd.</p>
+                        <p>Busify Bus Tracking & Booking (Pvt) Ltd.</p>
                         <p>No. 12/3, Sample Road, Sample City.</p>
                         <p>Hotline: 12345</p>
                         <p>info@busfy.com</p>
                     </div>
+                    <p>All Rights Reserved &copy; 2025</p>
                 </div>
             </div>
-        </div>
-        <div class="footer__bottom">
-            <p>All Rights Reserved &copy; 2020</p>
         </div>
     </footer>
 </body>

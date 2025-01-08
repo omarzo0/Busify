@@ -37,54 +37,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Passenger</title>
-    <link type="text/css" rel="stylesheet" href="../../template.css">
-    <link type="text/css" rel="stylesheet" href="../../SignUpSignIn.css">
+    <link type="text/css" rel="stylesheet" href="../css/Add_drive.css">
+    <link type="text/css" rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
-<header>
-<nav class="navigation">
-        <img class="logo" src="../../Supportive Files/logo.png" alt="Logo">
-        <div class="header__quick__links">
-        <a class="navigation__a" href="../AdminDashboard.php">Dashboard</a>
-        <a class="navigation__a" href="../AdminProfile.php">My profile</a>
-            <a class="navigation__a" href="../driver/Drivers.php">driver list</a>
-            <a class="navigation__a" href="../trips/Trips.php">trips list</a>
-            <a class="navigation__a" href="../passengers/passengers.php">passengers list</a>
-            <a class="navigation__a" href="../vehicles/vehicles.php">vehicle list</a>
-            <a href="../AdminSignIn.php">
-    <button class="btnsignin-popup" onclick="logout()">Logout</button>
-</a>
-        </div>
-        </nav>
-</header>
+<aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../../Supportive Files/logo.png" alt="logo" />
+      <h2>Busify</h2>
+    </div>
+    <ul class="sidebar-links">
+    
+      <li>
+        <a href="../AdminDashboard.php">
+          <span class="material-symbols-outlined"></span>Dashboard</a>
+      </li>
+      <li>
+        <a href="../AdminProfile.php"><span class="material-symbols-outlined"></span>My profile</a>
+      </li>
+      <li>
+        <a href="../driver/Drivers.php"><span class="material-symbols-outlined"></span>driver list</a>
+      </li>
+     
+      <li>
+        <a  href="../trips/Trips.php"><button><span class="material-symbols-outlined"></span></button>Trip List</a>
+      </li>
+      <li>
+        <a  href="../passengers/passengers.php"><button><span class="material-symbols-outlined"></span></button>passengers list</a>
+      </li>
+      <li>
+        <a href="../vehicles/vehicles.php"><button><span class="material-symbols-outlined"></span></button>vehicle List</a>
+      </li>
+      <li>
+        <a href="../passengerSignIn.php"><button><span class="material-symbols-outlined"></span></button>Logout</a>
+      </li>
+    </ul>
+  </aside>
 
-<div class="dashboard-container">
-    <h1>Add Passenger</h1>
+  <div class="driver__signup__page">
+  <h1>Add Passenger</h1>
     <?php if (!empty($error)) { ?>
         <p style="color: red;"><?php echo $error; ?></p>
     <?php } elseif (!empty($success)) { ?>
         <p style="color: green;"><?php echo $success; ?></p>
     <?php } ?>
     <form method="POST" action="Add_Passenger.php" class="add-form">
+    <div class="input__fields">
         <label for="fname">First Name:</label>
         <input type="text" id="fname" name="fname" required>
+    </div>
+    <div class="input__fields">
 
         <label for="lname">Last Name:</label>
         <input type="text" id="lname" name="lname" required>
+        </div>
+        <div class="input__fields">
 
         <label for="phone">Phone:</label>
         <input type="text" id="phone" name="phone" required>
+        </div>
+        <div class="input__fields">
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
+        </div>
+        <div class="input__fields">
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
+        </div>
+        <div class="input__fields">
 
         <label for="cpassword">Confirm Password:</label>
         <input type="password" id="cpassword" name="cpassword" required>
+        </div>
 
-        <button type="submit">Add Passenger</button>
+        <button class="submit__button" type="submit">Add Passenger</button>
     </form>
 </div>
 
