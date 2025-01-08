@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "All fields are required.";
     } else {
         // Insert into database
-        $query = "INSERT INTO buses (bus_number, bus_model, bus_color, available_seats)
+        $query = "INSERT INTO buses (bus_number, bus_model, bus_color, bus_capacity)
                   VALUES ('$bus_number', '$source', '$destination', '$available_seats')";
 
         if (mysqli_query($conn, $query)) {

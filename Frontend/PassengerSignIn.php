@@ -1,27 +1,84 @@
 <?php
 require_once '../Backend/ConnectDB.php';
 
-if(isset($_POST["submit"])){
+if (isset($_POST["submit"])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $result = mysqli_query($conn, "SELECT * FROM passenger_signup WHERE email = '$email'");
-    $row = mysqli_fetch_assoc($result);
-    if (mysqli_num_rows($result)>0){
-        $hashedPassword = $row['password'];
-        if(password_verify($password, $hashedPassword)){
-            session_start();
-            $_SESSION['login'] = true;
-            $_SESSION['id'] = $row['id'];
-            header("Location: Search&Track.php");
-        }else{
-            echo "<script>alert('Password is incorrect!')</script>";
+
+    if (!empty($email) && !empty($password)) {
+        // Check if the user is a passenger
+        $stmt = $conn->prepare("SELECT passenger_id, password FROM passenger_signup WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedPassword = $row['password'];
+
+            if (password_verify($password, $hashedPassword)) {
+                session_start();
+                $_SESSION['login'] = true;
+                $_SESSION['id'] = $row['passenger_id'];
+                header("Location: Search&Track.php");
+                exit;
+            } else {
+                echo "<script>alert('Password is incorrect!');</script>";
+            }
+        } else {
+            // Check if the user is a driver
+            $stmt = $conn->prepare("SELECT email, bus_number, cpassword FROM driver_signup WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $hashedPassword = $row['cpassword'];
+
+                if (password_verify($password, $hashedPassword)) {
+                    session_start();
+                    $_SESSION['login'] = true;
+                    $_SESSION['bus_number'] = $row['bus_number'];
+                    header("Location: driver.php");
+                    exit;
+                } else {
+                    echo "<script>alert('Password is incorrect!');</script>";
+                }
+            } else {
+                // Check if the user is an admin
+                $stmt = $conn->prepare("SELECT id, password FROM admin_signup WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $hashedPassword = $row['password'];
+
+                    if (password_verify($password, $hashedPassword)) {
+                        session_start();
+                        $_SESSION['admin_id'] = $row['id'];
+                        header("Location: ./admin/AdminDashboard.php");
+                        exit;
+                    } else {
+                        echo "<script>alert('Password is incorrect! from the admin side');</script>";
+                    }
+                } else {
+                    echo "<script>alert('Email is incorrect or not registered!');</script>";
+                }
+            }
         }
-    }else{
-        echo "<script>alert('Email is incorrect or not registered!')</script>";
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('Email and password fields cannot be empty!');</script>";
     }
 }
 
+$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -64,8 +64,8 @@ $result = mysqli_query($conn, $query);
             <td><?php echo $row['destination']; ?></td>
             <td><?php echo $row['price']; ?></td>
             <td>
-                <a href="edit_trip.php?id=<?php echo $row['id']; ?>">Edit</a> |
-                <a href="delete_trip.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this trip?');">Delete</a>
+                <a href="edit_trip.php?id=<?php echo $row['trip_id']; ?>">Edit</a> |
+                <a href="delete_trip.php?id=<?php echo $row['trip_id']; ?>" onclick="return confirm('Are you sure you want to delete this trip?');">Delete</a>
             </td>
         </tr>
         <?php } ?>

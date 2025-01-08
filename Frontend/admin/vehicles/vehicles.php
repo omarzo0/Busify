@@ -7,7 +7,7 @@ $query = "
         buses.bus_number, 
         buses.bus_model, 
         buses.bus_color, 
-        buses.available_seats, 
+        buses.bus_capacity, 
         drivers.fname, 
         drivers.lname 
     FROM 
@@ -64,7 +64,7 @@ $result = mysqli_query($conn, $query);
             <td><?php echo $row['fname'] . " " . $row['lname']; ?></td>
             <td><?php echo $row['bus_model']; ?></td>
             <td><?php echo $row['bus_color']; ?></td>
-            <td><?php echo $row['available_seats']; ?></td>
+            <td><?php echo $row['bus_capacity']; ?></td>
             <td>
                 <a href="edit_vehicle.php?id=<?php echo $row['bus_number']; ?>">Edit</a>
                 <a href="delete_vehicle.php?id=<?php echo $row['bus_number']; ?>">Delete</a>

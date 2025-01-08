@@ -39,15 +39,11 @@ require_once 'Backend/ConnectDB.php';
         <div class="selection">
             <div class="driver">
                 <img class="driver__img" src="Frontend\Supportive Files\driver-black.png" alt="Driver">
-                <a href="Frontend\DriverSignIn.php"><p class="selection__buttons">Driver</p></a>
+                <a href="Frontend\PassengerSignIn.php"><p class="selection__buttons">Sign In</p></a>
             </div>
             <div class="passenger">
                 <img class="passenger__img" src="Frontend\Supportive Files\passenger-black.png" alt="Passenger">
-                <a href="Frontend\PassengerSignIn.php"><p class="selection__buttons">Passenger</p></a>
-            </div>
-            <div class="passenger">
-                <img class="passenger__img" src="Frontend\Supportive Files\passenger-black.png" alt="Passenger">
-                <a href="Frontend\admin\AdminSignIn.php"><p class="selection__buttons">Admin</p></a>
+                <a href="Frontend\PassengerSignUp.php"><p class="selection__buttons">Sign Up</p></a>
             </div>
         </div>
     </details>

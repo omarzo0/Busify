@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         bus_number = '$bus_number', 
         bus_color = '$bus_color', 
         bus_model = '$bus_model',
-        available_seats = '$available_seats'
+        bus_capacity = '$available_seats'
         WHERE bus_number = $id";
 
     if (mysqli_query($conn, $update_query)) {

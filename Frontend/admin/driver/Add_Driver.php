@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
                              VALUES ('$fname', '$lname', '$phone', '$bus_number', '$email', '$address')";
 
             // Insert bus into `buses` table
-            $busesQuery = "INSERT INTO buses (bus_number, bus_model, bus_color, available_seats) 
+            $busesQuery = "INSERT INTO buses (bus_number, bus_model, bus_color, bus_capacity) 
                            VALUES ('$bus_number', '$bus_model', '$bus_color', '$available_seats')";
 
             // Execute queries

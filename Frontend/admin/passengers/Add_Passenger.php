@@ -11,15 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cpassword = mysqli_real_escape_string($conn, $_POST['cpassword']);
 
     // Validate form data
-    if (empty($fname) || empty($lname) || empty($phone) || empty($email) || empty($password) || empty($cpassword)) {
+    if (empty($fname) || empty($lname) || empty($email) || empty($password) || empty($cpassword)) {
         $error = "All fields are required.";
     } elseif ($password !== $cpassword) {
         $error = "Passwords do not match.";
     } else {
         // Insert into database
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO passenger_signup (fname, lname, phone, email, password, cpassword)
-                  VALUES ('$fname', '$lname', '$phone', '$email', '$hashedPassword', '$hashedPassword')";
+        $chashed = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO admin_signup (fname, lname, phone, email, password, cpassword)
+                  VALUES ('$fname', '$lname', '$phone', '$email', '$hashedPassword', '$chashed')";
 
         if (mysqli_query($conn, $query)) {
             $success = "Passenger added successfully.";
