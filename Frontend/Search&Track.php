@@ -20,6 +20,48 @@ if(!empty($_SESSION['id']) || $_SESSION['login'] == true){
     <title>Document</title>
     <link   rel="stylesheet" href="../frontend/css/global.css">
     <link   rel="stylesheet" href="../frontend/css/track.css">
+    <style>
+.popup {
+    position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,
+                    0,
+                    0,
+                    0.4);
+            display: none;
+}
+
+/* Popup content */
+.popup-content {
+    background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888888;
+            width: 70%;
+            font-weight: bolder;
+}
+
+.print__button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.print__button:hover {
+    background-color: #45a049;
+}
+
+</style>
 </head>
 <body>
 
@@ -48,7 +90,7 @@ if(!empty($_SESSION['id']) || $_SESSION['login'] == true){
         <div class="search__box">
             <div>
                 <label>From</label>
-                <input type="text" name="source" placeholder="From" required>
+                <input type="text" name="source" placeholder="From">
             </div>
             <div>
                 <label>To</label>
@@ -62,23 +104,25 @@ if(!empty($_SESSION['id']) || $_SESSION['login'] == true){
 </form>
 <?php
 
+require_once '../Backend/ConnectDB.php'; // Include the database connection file
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['book'])) {
 
+        // Extract values from the input
         $bus_details = explode('|', $_POST['bus_number']);
         $bus_number = $bus_details[0];
         $trip_id = $bus_details[1];
         $passenger_id = $bus_details[2];
 
-        // Use prepared statement for insertion
+        // Use a prepared statement for booking
         $stmt1 = $conn->prepare("INSERT INTO reserved (trip_id, passenger_id, bus_number) VALUES (?, ?, ?)");
-        $stmt1->bind_param("iss", $trip_id, $passenger_id, $bus_number); // Binding for integer, string, and string
+        $stmt1->bind_param("iss", $trip_id, $passenger_id, $bus_number);
 
-        // Execute the prepared statement
         if ($stmt1->execute()) {
             echo "<script>
                     alert('Booking successful!');
-                    window.location.href = 'Search&Track.php'; // Redirect to confirmation page or wherever appropriate
+                    window.location.href = 'Search&Track.php'; 
                   </script>";
         } else {
             echo "<script>
@@ -87,136 +131,146 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   </script>";
         }
 
-        // Close the prepared statement
         $stmt1->close();
 
-        // Update the available_seats column in the database
-        $update_sql = "UPDATE trips SET available_seats = available_seats - 1 WHERE bus_number = '$bus_number' AND available_seats > 0";
-        if (mysqli_query($conn, $update_sql)) {
+        // Update available seats safely using a prepared statement
+        $update_stmt = $conn->prepare("UPDATE trips SET available_seats = available_seats - 1 WHERE bus_number = ? AND available_seats > 0");
+        $update_stmt->bind_param("s", $bus_number);
+
+        if ($update_stmt->execute()) {
             echo "<p>Booking successful! Seat reserved.</p>";
         } else {
             echo "<p>Booking failed. Please try again.</p>";
         }
 
+        $update_stmt->close();
+
     } else {
-        $source = $_POST['source'];
-$destination = $_POST['destination'];
-$passenger_id = $_SESSION['id']; // Assuming passenger_id is stored in session
+        // Searching trips logic
+        $source = $_POST['source'] ?? ''; // Default to empty string if not set
+        $destination = $_POST['destination'] ?? ''; // Default to empty string if not set
 
-// Query to get the trip and associated driver and bus details, excluding trips already booked by the passenger
-$query_trip = "
-SELECT trips.*, drivers.fname, drivers.lname, buses.bus_model 
-FROM trips 
-INNER JOIN drivers ON trips.bus_number = drivers.bus_number
-INNER JOIN buses ON trips.bus_number = buses.bus_number
-WHERE trips.source LIKE ? 
-AND trips.destination LIKE ? 
-AND trips.available_seats > 0
-AND trips.trip_id NOT IN (
-    SELECT trip_id FROM reserved WHERE passenger_id = ?
-)";
+        $passenger_id = $_SESSION['id'] ?? ''; // Ensure session ID is set
+        if (empty($source) && empty($destination) && empty($passenger_id)) {
+            echo "<p>Missing source, destination, or passenger ID.</p>";
+        } else {
+            // Query for available trips
+            $query_trip = "
+            SELECT trips.*, drivers.fname, drivers.lname, buses.bus_model 
+            FROM trips 
+            INNER JOIN drivers ON trips.bus_number = drivers.bus_number
+            INNER JOIN buses ON trips.bus_number = buses.bus_number
+            WHERE trips.source LIKE ? 
+            AND trips.destination LIKE ? 
+            AND trips.available_seats > 0
+            AND trips.trip_id NOT IN (
+                SELECT trip_id FROM reserved WHERE passenger_id = ?
+            )";
 
-$stmt_trip = $conn->prepare($query_trip);
-$source_param = "%" . $source . "%";
-$destination_param = "%" . $destination . "%";
+            $stmt_trip = $conn->prepare($query_trip);
+            $source_param = "%" . $source . "%";
+            $destination_param = "%" . $destination . "%";
 
-// Bind parameters for source, destination, and passenger_id (to exclude already booked trips)
-$stmt_trip->bind_param("sss", $source_param, $destination_param, $passenger_id);
-$stmt_trip->execute();
-$result_trip = $stmt_trip->get_result();
+            $stmt_trip->bind_param("sss", $source_param, $destination_param, $passenger_id);
+            $stmt_trip->execute();
+            $result_trip = $stmt_trip->get_result();
 
+        // HTML Display
         ?>
         <div class="head__box">
-        <p>Available Buses</p>
-        <?php
-        // Check if results exist
-        if (mysqli_num_rows($result_trip) > 0) { 
-            while ($row = mysqli_fetch_assoc($result_trip)) {
-                // Get the scheduled date and time
-                $scheduled_date = new DateTime($row['date']);
-                $formatted_date = $scheduled_date->format('m/d/Y');
-                $formatter = new IntlDateFormatter('en_US', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
-                $formatter->setPattern('EEEE, MMMM dd, yyyy');
-                $detailed_date = $formatter->format(new DateTime($row['date']));
+            <p>Available Buses</p>
+            <?php if ($result_trip->num_rows > 0) { 
+                while ($row = $result_trip->fetch_assoc()) {
+                    $formatted_date = (new DateTime($row['date']))->format('m/d/Y');
+                    $detailed_date = (new IntlDateFormatter('en_US', IntlDateFormatter::FULL, IntlDateFormatter::NONE))
+                                     ->format(new DateTime($row['date']));
+                    $formatted_time = (new DateTime($row['time']))->format('h:i A');
+                    ?>
+                    <div class="search__box">
+                        <div>
+                            <label>Bus Number</label>
+                            <input type="text" value="<?php echo htmlspecialchars($row['bus_number']); ?>" readonly>
+                        </div>
+                        <div>
+                            <label>From</label>
+                            <input type="text" value="<?php echo htmlspecialchars($row['source']); ?>" readonly>
+                        </div>
+                        <div>
+                            <label>To</label>
+                            <input type="text" value="<?php echo htmlspecialchars($row['destination']); ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <input type="text" value="<?php echo $formatted_date . " (" . $detailed_date . ")"; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Time</label>
+                            <input type="text" value="<?php echo $formatted_time; ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Price</label>
+                            <input type="text" value="<?php echo htmlspecialchars($row['price']); ?>" readonly>
+                        </div>
+                        <div>
+                            <label>Available Seats</label>
+                            <input type="text" value="<?php echo htmlspecialchars($row['available_seats']); ?>" readonly>
+                        </div>
+                        <div>
+                            <form method="POST">
+                                <input type="hidden" name="bus_number" 
+                                       value="<?php echo htmlspecialchars($row['bus_number'] . '|' . $row['trip_id'] . '|' . $_SESSION['id']); ?>">
+                                <button class="search__button" type="submit" name="book">Book</button>
+                            </form>
+                        </div>
+                        <div>
+    <form method="POST">
+        <input type="hidden" class="bus_number" id = "busNumber" value="<?php echo $row['bus_number']; ?>">
+        <button class="detailsButton search__button" id= "detailsButton" name = "details" type="submit">Details</button>
+    </form>
 
-                $time = new DateTime($row['time']);
-                $formatted_time = $time->format('h:i A'); // Format time as hh:mm AM/PM
-                ?>
-                
-                <div class="search__box">
-                    <div>
-                        <label>Bus Number</label>
-                        <input type="text" value="<?php echo $row['bus_number']; ?>" readonly>
+    <!-- Popup -->
+    <div id="myPopup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <button id="printButton" class="print__button">Print</button>
+        <form id="busDetailsForm">
+            <label>
+                Driver Name:
+                <input type="text" id="driverName" readonly>
+            </label>
+            <label>
+                Phone Number:
+                <input type="text" id="phoneNumber" readonly>
+            </label>
+            <label>
+                Bus Model:
+                <input type="text" id="busModel" readonly>
+            </label><br>
+            <label>
+                Bus Color:
+                <input type="text" id="busColor" readonly>
+            </label>
+        </form>
+    </div>
+</div>
+
+</div>
                     </div>
-                    <div>
-                        <label>From</label>
-                        <input type="text" value="<?php echo $row['source']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>To</label>
-                        <input type="text" value="<?php echo $row['destination']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Date</label>
-                        <input type="text" value="<?php echo $formatted_date . " (" . $detailed_date . ")"; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <input type="text" value="<?php echo $formatted_time; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Price</label>
-                        <input type="text" value="<?php echo $row['price']; ?>" readonly>
-                    </div>
-                    <div>
-                        <label>Available Seats</label>
-                        <input type="text" value="<?php echo $row['available_seats']; ?>" readonly>
-                    </div>
-                    <div>
-                        <form method="POST">
-                            <input type="hidden" name="bus_number" value="<?php echo $row['bus_number'] . '|' . $row['trip_id'] . '|' . $row_in['passenger_id']; ?>"> <!-- Assuming passenger_id is stored in session -->
-                            <button class="search__button" type="submit" name="book">Book</button>
-                        </form>
-                    </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            <?php } else {
+                echo '<p>No buses found for the selected route.</p>';
+            }
+
+            $stmt_trip->close();
+            ?>
         </div>
-       <?php } else {
-            echo '<p>No buses found for the selected route.</p>';
+        <?php
         }
-
-        // Close the prepared statement
-        $stmt_trip->close();
     }
 }
+
 $conn->close();
 ?>
 
-
-
-
-    <div class="head__box">
-        <p>Track Your Bus</p>
-        <div class="track__box">
-            <div>
-                <label>From</label>
-                <input type="text" placeholder="From" required>
-            </div>
-            <div>
-                <label>To</label>
-                <input type="text" placeholder="To" required>
-            </div>
-            <div>
-                <label>Bus Number</label>
-                <input type="text" placeholder="Bus Number" required>
-            </div>
-            <div>
-                <button class="search__button">Track</button>
-            </div>
-        </div>
-    </div>
-    
-</div>
 
 <!--=================================================Footer Area==============================================================-->
 <footer id="footer">
@@ -255,3 +309,55 @@ $conn->close();
 </body>
 </html>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".detailsButton").forEach(button => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent form submission
+
+            const busNumber = button.previousElementSibling.value; // Get bus number
+
+            // Show the popup
+            const popup = document.getElementById("myPopup");
+            popup.style.display = "block";
+
+            // Fetch and display data for the bus
+            fetch('fetch_driver_details.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ bus_number: busNumber })
+            })
+                .then(response => response.json())
+                .then(bus_details => {
+                    if (bus_details.length > 0) {
+                        // Assuming only one record is fetched
+                        const detail = bus_details[0];
+                        document.getElementById("driverName").value = detail.name;
+                        document.getElementById("phoneNumber").value = detail.phone;
+                        document.getElementById("busNumber").value = detail.bus_number;
+                        document.getElementById("busModel").value = detail.bus_model;
+                        document.getElementById("busColor").value = detail.bus_color;
+                    }
+                })
+                .catch(error => console.error("Error fetching details:", error));
+        });
+    });
+
+    // Close popup
+    document.getElementById("printButton").addEventListener("click", () => {
+            window.print();
+        });
+
+    // Close popup when clicking outside the popup content
+    window.addEventListener("click", (event) => {
+        const popup = document.getElementById("myPopup");
+        if (event.target === popup) {
+            popup.style.display = "none";
+        }
+    });
+});
+
+
+</script>

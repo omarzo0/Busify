@@ -50,7 +50,7 @@ $result = mysqli_query($conn, $query);
 <!-- Passenger Dashboard -->
 <div class="dashboard-container">
     <h1>Passengers List</h1>
-    <a class="" href="Add_Passenger.php">Add Passenger</a>
+    
     <a class="" href="feedback.php">Passengers Feedback</a>
     <table>
         <tr>

@@ -65,7 +65,6 @@ $result = mysqli_query($conn, $query);
 
 <div class="dashboard-container">
     <h1>Vehicle List</h1>
-    <a class="but11" href="add_vehicle.php">Add vehicle</a>
     <table>
         <tr>
             <th>Bus Number</th>
